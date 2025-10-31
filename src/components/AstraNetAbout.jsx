@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import avatarAbhineet from "../assets/avatar-abhineet.png.png";
-import avatarKhushi from "../assets/avatar-khushi.png.png";
-import avatarSuryansh from "../assets/avatar-suryansh.png.png";
-import avatarRiva from "../assets/avatar-riva.png.png";
-import avatarAkash from "../assets/avatar-akash.png.png";
+import avatarAbhineet from "../assets/avatar-abhineet.png";
+import avatarKhushi from "../assets/avatar-khushi.png";
+import avatarSuryansh from "../assets/avatar-suryansh.png";
+import avatarRiva from "../assets/avatar-riva.png";
+import avatarAkash from "../assets/avatar-akash.png";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 
