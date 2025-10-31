@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Dynamic Dark Theme</title>
+    <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-black/50 z-0"></div>
+        <div class="container mx-auto px-4 z-10">
+            <h1 class="text-6xl md:text-8xl font-bold text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                About Us
+            </h1>
+            <p class="text-xl md:text-2xl text-center text-gray-300 max-w-3xl mx-auto">
+                Crafting digital experiences that push the boundaries of innovation
+            </p>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-24 bg-black/80">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                Our Journey
+            </h2>
+            <div class="max-w-4xl mx-auto">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item relative flex items-center mb-20">
+                    <div class="w-full bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-lg p-8 border border-purple-500/20">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-400">2020 - The Beginning</h3>
+                        <p class="text-gray-300">Founded with a vision to revolutionize digital experiences, we started our journey with a team of three visionary developers.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item relative flex items-center mb-20">
+                    <div class="w-full bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-lg p-8 border border-purple-500/20">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-400">2022 - Global Expansion</h3>
+                        <p class="text-gray-300">Expanded our reach to international markets and established partnerships with leading tech companies worldwide.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item relative flex items-center">
+                    <div class="w-full bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-lg p-8 border border-purple-500/20">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-400">2024 - Innovation Hub</h3>
+                        <p class="text-gray-300">Launched our innovation hub, focusing on cutting-edge technologies and sustainable digital solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-24 bg-black">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                Meet Our Team
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+                <!-- Team Member 1 -->
+                <div class="team-card h-96">
+                    <div class="card-inner">
+                        <div class="card-front bg-gradient-to-b from-purple-900/30 to-pink-900/30 rounded-lg p-6 flex flex-col items-center justify-center border border-purple-500/20">
+                            <div class="w-48 h-48 rounded-full overflow-hidden mb-6">
+                                <img src="https://picsum.photos/400/400" alt="Team Member 1" class="w-full h-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Sarah Johnson</h3>
+                            <p class="text-purple-400">Chief Executive Officer</p>
+                        </div>
+                        <div class="card-back bg-gradient-to-b from-pink-900/30 to-purple-900/30 rounded-lg p-6 flex flex-col items-center justify-center border border-purple-500/20">
+                            <p class="text-center text-gray-300">"Innovation is not just about technology, it's about creating meaningful experiences that resonate with people."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="team-card h-96">
+                    <div class="card-inner">
+                        <div class="card-front bg-gradient-to-b from-purple-900/30 to-pink-900/30 rounded-lg p-6 flex flex-col items-center justify-center border border-purple-500/20">
+                            <div class="w-48 h-48 rounded-full overflow-hidden mb-6">
+                                <img src="https://picsum.photos/401/401" alt="Team Member 2" class="w-full h-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Michael Chen</h3>
+                            <p class="text-purple-400">Technical Director</p>
+                        </div>
+                        <div class="card-back bg-gradient-to-b from-pink-900/30 to-purple-900/30 rounded-lg p-6 flex flex-col items-center justify-center border border-purple-500/20">
+                            <p class="text-center text-gray-300">"We strive to push the boundaries of what's possible in digital experiences."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="team-card h-96">
+                    <div class="card-inner">
+                        <div class="card-front bg-gradient-to-b from-purple-900/30 to-pink-900/30 rounded-lg p-6 flex flex-col items-center justify-center border border-purple-500/20">
+                            <div class="w-48 h-48 rounded-full overflow-hidden mb-6">
+                                <img src="https://picsum.photos/402/402" alt="Team Member 3" class="w-full h-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Emma Rodriguez</h3>
+                            <p class="text-purple-400">Creative Director</p>
+                        </div>
+                        <div class="card-back bg-gradient-to-b from-pink-900/30 to-purple-900/30 rounded-lg p-6 flex flex-col items-center justify-center border border-purple-500/20">
+                            <p class="text-center text-gray-300">"Design is not just what it looks like, it's how it works and feels."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Small helper utilities for the AstraNet design */
+:root{
+  --bg:#1a1a2e;
+  --primary:#00aaff;
+  --accent:#ff5e00;
+}
+
+/* Example utility class for neon outline (use in components) */
+.neon-outline {
+  box-shadow: 0 6px 30px rgba(0,170,255,0.12);
+}
