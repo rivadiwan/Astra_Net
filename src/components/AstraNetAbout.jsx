@@ -1,5 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import avatarAbhineet from "../assets/avatar-abhineet.png.png";
+import avatarKhushi from "../assets/avatar-khushi.png.png";
+import avatarSuryansh from "../assets/avatar-suryansh.png.png";
+import avatarRiva from "../assets/avatar-riva.png.png";
+import avatarAkash from "../assets/avatar-akash.png.png";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 
@@ -8,7 +13,8 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 const AstraNetAbout = () => {
   // Refs for GSAP animations
   const heroRef = useRef(null);
-  const problemTextRef = useRef(null);
+  const underlineRef = useRef(null);
+  const descriptionRef = useRef(null);
   const workflowRef = useRef(null);
   const teamRef = useRef(null);
   const techScrollerRef = useRef(null);
@@ -23,11 +29,11 @@ const AstraNetAbout = () => {
 
   // Team members data
   const teamMembers = [
-    { name: 'Abhineet', role: 'Backend Developer' },
-    { name: 'Khushi', role: 'Frontend Developer' },
-    { name: 'Suryansh', role: 'Mobile App Developer' },
-    { name: 'Riva', role: 'Frontend Developer' },
-    { name: 'Akash', role: 'Machine Learning Engineer' }
+    { name: "Abhineet", role: "Machine Learning Engineer", avatarUrl: avatarAbhineet },
+    { name: "Khushi", role: "Frontend Developer", avatarUrl: avatarKhushi },
+    { name: "Suryansh", role: "Mobile App Developer", avatarUrl: avatarSuryansh },
+    { name: "Riva", role: "Frontend Developer", avatarUrl: avatarRiva },
+    { name: "Akash", role: "Backend Developer", avatarUrl: avatarAkash }
   ];
 
   // Workflow steps
@@ -71,29 +77,50 @@ const AstraNetAbout = () => {
         duration: 0.8,
         ease: 'back.out(1.7)'
       })
-      .from(problemTextRef.current.children, {
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        stagger: 0.1
-      }, '-=0.5');
+      // Animate the glowing underline
+      .to(underlineRef.current, {
+        opacity: 1,
+        duration: 1,
+        ease: 'power2.out'
+      }, '-=0.2')
+      // Animate the main description
+      .fromTo(descriptionRef.current, 
+        {
+          opacity: 0,
+          y: 40
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out'
+        },
+        '-=0.4'
+      );
 
     // Workflow card animations
+    // Make sure workflow cards are visible by default (prevent being hidden before ScrollTrigger fires)
+    const workflowCards = document.querySelectorAll('[data-workflow]');
+    if (workflowCards.length) {
+      gsap.set(workflowCards, { opacity: 1, y: 0 });
+    }
+
     workflowSteps.forEach((_, index) => {
       const card = document.querySelector(`[data-workflow="${index}"]`);
-      
-      // Initial animation on scroll
+
+      // Scroll-triggered reveal (don't let immediateRender hide elements)
       gsap.from(card, {
         scrollTrigger: {
           trigger: workflowRef.current,
-          start: 'top center+=100',
+          start: 'top bottom',
           toggleActions: 'play none none reverse'
         },
         y: 100,
         opacity: 0,
         duration: 1,
         ease: 'power3.out',
-        delay: index * 0.2
+        delay: index * 0.2,
+        immediateRender: false
       });
 
       // Hover animations for workflow cards
@@ -127,39 +154,64 @@ const AstraNetAbout = () => {
       });
     });
 
-    // Team cards animation with enhanced 3D effect
+    // Ensure team cards are visible by default
+    const teamCards = document.querySelectorAll('[data-team-card]');
+    if (teamCards.length) {
+      gsap.set(teamCards, { opacity: 1, y: 0 });
+    }
+
+    // Team cards animation with enhanced 3D effect (scroll reveal)
     gsap.from('[data-team-card]', {
       scrollTrigger: {
         trigger: teamRef.current,
-        start: 'top center+=100',
+        start: 'top bottom',
         toggleActions: 'play none none reverse'
       },
       y: 100,
       opacity: 0,
       duration: 1,
       stagger: 0.2,
-      ease: 'power3.out'
+      ease: 'power3.out',
+      immediateRender: false
     });
 
     // Add hover animations for team cards
     document.querySelectorAll('[data-team-card]').forEach(card => {
       card.addEventListener('mouseenter', () => {
         gsap.to(card, {
-          scale: 1.05,
-          rotationY: 10,
+          scale: 1.02,
+          rotateX: 5,
+          rotateY: 5,
           duration: 0.4,
           ease: 'power2.out',
-          boxShadow: '0 20px 40px rgba(0,170,255,0.3)'
+          boxShadow: '0 25px 50px rgba(0,170,255,0.15)'
+        });
+
+        // Enhance image glow on hover
+        const imageContainer = card.querySelector('img').parentElement;
+        gsap.to(imageContainer, {
+          boxShadow: '0 0 35px #00aaff',
+          duration: 0.4,
+          ease: 'power2.out'
         });
       });
 
       card.addEventListener('mouseleave', () => {
         gsap.to(card, {
           scale: 1,
-          rotationY: 0,
+          rotateX: 0,
+          rotateY: 0,
           duration: 0.4,
           ease: 'power2.out',
-          boxShadow: '0 6px 30px rgba(0,170,255,0.12)'
+          boxShadow: '0 15px 35px rgba(0,170,255,0.1)'
+        });
+
+        // Reset image glow
+        const imageContainer = card.querySelector('img').parentElement;
+        gsap.to(imageContainer, {
+          boxShadow: '0 0 25px #00aaff',
+          duration: 0.4,
+          ease: 'power2.out'
         });
       });
     });
@@ -222,50 +274,23 @@ const AstraNetAbout = () => {
         
         <div className="container mx-auto max-w-6xl">
           <div ref={heroRef} className="text-center mb-12">
-            <h1 className="opacity-0 text-5xl md:text-7xl font-bold mb-8 text-white">
+            <h1 className="opacity-0 text-5xl md:text-7xl font-bold mb-4 text-white">
               AstraNet: The AI-Powered Early Warning Network
             </h1>
-            <div ref={problemTextRef} className="max-w-3xl mx-auto space-y-6 text-lg md:text-xl">
-              <p className="font-medium text-white/90">Current defense systems are overwhelmed by cheap, numerous drones.</p>
-              <p className="font-medium text-white/90">Traditional radar infrastructures are expensive, sparse, and create dangerous detection gaps that can be exploited by small aerial threats.</p>
-            </div>
+            
+            {/* Glowing underline */}
+            <div className="h-1 w-24 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto mt-4 rounded-full opacity-0" ref={underlineRef}></div>
+            
+            {/* Main description */}
+            <p className="opacity-0 text-lg md:text-xl text-white/80 max-w-3xl mx-auto mt-6 leading-relaxed" ref={descriptionRef}>
+              AstraNet is an AI-powered defense intelligence network designed to detect, classify, and neutralize rogue aerial threats in real time. By integrating citizen-sourced data, advanced computer vision models, and real-time analytics, AstraNet transforms how defense ecosystems perceive and respond to low-cost, fast-moving drone incursions. It bridges the gap between detection and decision-making — turning raw sensor input into actionable intelligence for rapid threat response.
+            </p>
           </div>
 
-          {/* Dashboard Preview */}
-          <div className="relative mt-12 rounded-lg overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.1)] border border-white/10">
-            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
-            <div className="bg-zinc-900 p-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Stats Panel */}
-                <div className="bg-black/50 rounded-lg p-4 border border-white/10">
-                  <h3 className="text-lg font-bold text-white mb-2">Active Threats</h3>
-                  <div className="text-3xl font-bold text-white">24</div>
-                  <p className="text-white/60 text-sm">Last 24 hours</p>
-                </div>
-                {/* Coverage Map */}
-                <div className="bg-black/50 rounded-lg p-4 border border-white/10 md:col-span-2">
-                  <h3 className="text-lg font-bold text-white mb-2">Coverage Map</h3>
-                  <div className="aspect-video bg-zinc-800 rounded-lg 
-                                border border-white/5 relative overflow-hidden">
-                    {/* Map Overlay */}
-                    <div
-                      className="absolute inset-0 opacity-20 pointer-events-none"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml;utf8,<svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M10 0V20M0 10H20' stroke='rgba(255,255,255,0.1)'/></svg>")`,
-                        backgroundRepeat: 'repeat'
-                      }}
-                    />
-                    {/* Radar Sweep Animation */}
-                    <div className="absolute inset-0 origin-center animate-[spin_4s_linear_infinite] bg-gradient-conic from-white/5 to-transparent" />
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Workflow Section */}
+        {/* Workflow Section */}
       <section ref={workflowRef} className="py-20 px-4 bg-zinc-950">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold text-center mb-16 text-white">
@@ -277,66 +302,99 @@ const AstraNetAbout = () => {
                   key={step.title}
                   data-workflow={index}
                   className="relative h-80 perspective-[1000px] group cursor-pointer"
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
-                  <div className="card-front absolute inset-0 p-6 rounded-lg bg-zinc-900/80 
+                  <div
+                    className="card-front absolute inset-0 p-6 rounded-lg bg-zinc-900/80 
                                 backdrop-blur-sm
                                 border border-white/20 
                                 shadow-[0_0_30px_rgba(255,255,255,0.05)]
-                                transform-gpu backface-hidden transition-all duration-500
+                                transform-gpu transition-all duration-500
                                 group-hover:border-white/40"
+                    style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                   >
                     <div className="text-5xl mb-6">{step.icon}</div>
-                    <h3 className="text-2xl font-bold text-white mb-4">{step.title}</h3>
-                    <div className="text-white/60 text-sm">Hover to learn more</div>
+                    <h3 className="text-2xl font-bold text-white mb-4 text-left" dir="ltr">{step.title}</h3>
+                    <div className="text-white/60 text-sm text-left" dir="ltr">Hover to learn more</div>
                     <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 
                                   bg-gradient-to-br from-white/10 to-transparent 
                                   transition-opacity duration-300" />
                   </div>
-                  <div className="card-back absolute inset-0 p-6 rounded-lg bg-zinc-900/80 
+                  <div
+                    className="card-back absolute inset-0 p-6 rounded-lg bg-zinc-900/80 
                                 backdrop-blur-sm
                                 border border-white/20
                                 shadow-[0_0_30px_rgba(255,255,255,0.05)]
-                                transform-gpu rotateY-180 backface-hidden transition-all duration-500"
+                                transform-gpu transition-all duration-500"
+                    style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                   >
-                    <div className="h-full flex flex-col justify-center">
+                    <div className="h-full flex flex-col justify-center text-left" dir="ltr">
                       <p className="text-white/90 font-medium leading-relaxed text-lg">
                         {step.detail}
                       </p>
                     </div>
                   </div>
-              </div>
+                </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section ref={teamRef} className="py-20 px-4 bg-black">
+      <section ref={teamRef} className="py-20 px-4 bg-gradient-to-b from-black to-zinc-950">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">Meet Team Aetherflux</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-white">Meet Team Aetherflux</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto mb-6">Elite professionals pioneering the future of aerial threat detection and response</p>
+            <div className="flex justify-center gap-2 mb-8">
+              <span className="px-4 py-1 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-sm text-zinc-300">5 Core Members</span>
+              <span className="px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-sm text-blue-400">Specialized Team</span>
+            </div>
+            <div className="w-32 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500/50 to-blue-500/0 mx-auto"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4">
             {teamMembers.map((member, index) => (
               <div
                 key={member.name}
                 data-team-card
-                className="group relative p-8 rounded-lg bg-zinc-900 
-                         border border-white/10
-                         shadow-[0_10px_40px_rgba(255,255,255,0.05)]
-                         transition-all duration-500 ease-out
-                         transform-gpu hover:-translate-y-2 hover:rotate-2
-                         hover:border-white/20
-                         hover:shadow-[0_20px_60px_rgba(255,255,255,0.1)]"
+                className="group relative p-6 rounded-xl bg-zinc-900/80 
+                         backdrop-blur-sm
+                         border border-zinc-800
+                         shadow-lg
+                         transition-all duration-300 ease-out
+                         transform-gpu hover:-translate-y-1
+                         hover:border-zinc-700
+                         hover:shadow-xl
+                         flex flex-col items-center
+                         w-full max-w-sm mx-auto"
+                style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
               >
-                <div className="w-28 h-28 mx-auto mb-6 rounded-full 
-                              bg-gradient-to-br from-white/10 to-white/5
-                              border-2 border-white/20
-                              shadow-[0_0_30px_rgba(255,255,255,0.1)]
-                              group-hover:border-white/30
-                              group-hover:shadow-[0_0_40px_rgba(255,255,255,0.15)]
-                              transition-all duration-500" />
-                <h3 className="text-2xl font-bold mb-3 text-center text-white">{member.name}</h3>
-                <p className="text-gray-200 text-center font-medium">{member.role}</p>
-                <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 
+                <div className="relative mb-6 flex justify-center items-center">
+                  <div
+                    className="w-24 h-24 rounded-full overflow-hidden transform-gpu relative"
+                    style={{
+                      boxShadow: '0 0 25px #00aaff',
+                      transform: 'translateZ(50px)'
+                    }}
+                  >
+                    <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-blue-500/20 to-blue-500/10">
+                      <img
+                        src={member.avatarUrl}
+                        alt={`${member.name}`}
+                        className="w-24 h-24 rounded-full object-cover transform-gpu transition-all duration-300 group-hover:scale-110 group-hover:brightness-110"
+                        style={{
+                          filter: 'brightness(1.05) contrast(1.05)',
+                          imageRendering: 'high-quality'
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <h3 className="text-xl font-bold mb-2 text-center text-white">{member.name}</h3>
+                <p className="text-blue-400 text-sm font-medium mb-4">{member.role}</p>
+
+                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 
                               bg-gradient-to-br from-white/5 to-transparent 
                               transition-opacity duration-300" />
               </div>
